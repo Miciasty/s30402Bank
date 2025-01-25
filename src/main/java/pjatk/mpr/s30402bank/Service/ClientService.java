@@ -31,8 +31,19 @@ public class ClientService {
 
     /**/
 
+    public String getClientData(int id) {
+        for (Client client : clientDatabase.getClients()) {
+            if (client.getId() == id) {
+                return client.toString();
+            }
+        }
+        return null;
+    }
+
+    /**/
+
     public Operation send(int id, double amount) {
-        return this.deposit(id, amount);
+        return this.withdraw(id, amount);
     }
 
     public Operation deposit(int id, double amount) {
@@ -44,17 +55,25 @@ public class ClientService {
 
             }
         }
+        System.out.println("Client doesn't have account in this bank.");
         return new Operation(amount, false);
     }
 
     public Operation withdraw(int id, double amount) {
         for (Client client : clientDatabase.getClients()) {
             if (client.getId() == id) {
+
+                if (client.getBalance() < amount) {
+                    System.out.println("Client doesn't have enough balance");
+                    return new Operation(amount, false);
+                }
+
                 client.withdraw(amount);
 
                 return new Operation(amount, true);
             }
         }
+        System.out.println("Client doesn't have account in this bank.");
         return new Operation(amount, false);
     }
 
