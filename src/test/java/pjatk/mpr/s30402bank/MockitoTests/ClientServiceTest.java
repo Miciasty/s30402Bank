@@ -1,5 +1,6 @@
 package pjatk.mpr.s30402bank.MockitoTests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -8,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pjatk.mpr.s30402bank.Database.ClientDatabase;
 import pjatk.mpr.s30402bank.Entity.Client;
+import pjatk.mpr.s30402bank.Entity.Operation;
 import pjatk.mpr.s30402bank.Service.ClientService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +25,7 @@ public class ClientServiceTest {
     private ClientService clientService;
 
     @Test
-    void shouldAddClient() {
+    void shouldSendClientToDatabase() {
         // GIVEN
         double balance = 200;
         // WHEN
@@ -34,6 +36,15 @@ public class ClientServiceTest {
 
         Client client = clientCaptor.getValue();
         assertThat(client).isNotNull();
+    }
+
+    @Test
+    void shouldReceiveNegativeOperation() {
+        // GIVEN
+        // WHEN
+        Operation op = clientService.deposit(1, 400);
+        // THEN
+        assertThat(op.getStatus()).isFalse();
     }
 
 }
