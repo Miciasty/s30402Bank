@@ -55,4 +55,26 @@ public class ClientServiceTest {
 
         assertThat(clientService.getClientWithID(n)).isNull();
     }
+
+    @Test
+    void shouldntSendMoneyNotBankAccount() {
+        // GIVEN
+        int n = 1;
+        double balance = 400;
+        // WHEN
+        Operation op = clientService.send(n, balance);
+        // THEN
+        assertThat(op.getStatus()).isFalse();
+    }
+
+    @Test
+    void shouldntPayNotBankAccount() {
+        // GIVEN
+        int n = 5;
+        double balance = 400;
+        // WHEN
+        Operation op = clientService.pay(n, balance);
+        // THEN
+        assertThat(op.getStatus()).isFalse();
+    }
 }

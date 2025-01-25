@@ -63,6 +63,16 @@ public class ClientServiceTest {
     }
 
     @Test
+    public void shouldntSendMoneyNotBankAccount() {
+        // GIVEN
+        int id = 5;
+        // WHEN
+        Operation op = clientService.send(id, 300);
+        // THEN
+        assertThat(op.getStatus()).isFalse();
+    }
+
+    @Test
     public void shouldDepositMoneyAndHaveNewBalance() {
         // GIVEN
         int id = 1;
@@ -70,6 +80,15 @@ public class ClientServiceTest {
         clientService.deposit(id, 1200);
         // THEN
         assertThat(clientService.getClientWithID(id).getBalance()).isEqualTo(2200);
+    }
+
+    @Test
+    public void shouldntDepositMoneyNotBankAccount() {
+        // GIVEN
+        int id = 5;
+        // WHEN
+        Operation op = clientService.deposit(id, 1200);
+        assertThat(op.getStatus()).isFalse();
     }
 
     @Test

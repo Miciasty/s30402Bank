@@ -118,4 +118,8 @@ public class ClientService {
         return new Operation(amount, false);
     }
 
+    public Operation pay(int id, double amount) {
+        return withdraw(id, amount);
+    }
+
 }

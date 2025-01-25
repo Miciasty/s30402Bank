@@ -28,6 +28,7 @@ public class Client {
     }
 
     public void withdraw(double amount) {
+        if (balance < amount) return;
         balance -= amount;
     }
 }
