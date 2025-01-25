@@ -1,4 +1,4 @@
-package pjatk.mpr.s30402bank.IntegrityTests;
+package pjatk.mpr.s30402bank.UnitTests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class ClientServiceTest {
 
     @Test void shouldUnregisterClient() {
         // GIVEN
-        int id = 0;
+        int id = 1;
         // WHEN
         clientService.unregisterClientWithID(id);
         // THEN
