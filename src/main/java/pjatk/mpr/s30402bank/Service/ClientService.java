@@ -22,20 +22,47 @@ public class ClientService {
     }
 
     public void unregisterClientWithID(int id) {
-        for (Client client : clientDatabase.getClients()) {
-            if (client.getId() == id) {
-                clientDatabase.remove(client);
+
+        try {
+            for (Client client : clientDatabase.getClients()) {
+                if (client.getId() == id) {
+                    clientDatabase.remove(client);
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
         }
     }
 
     /**/
 
     public String getClientData(int id) {
-        for (Client client : clientDatabase.getClients()) {
-            if (client.getId() == id) {
-                return client.toString();
+
+        try {
+            for (Client client : clientDatabase.getClients()) {
+                if (client.getId() == id) {
+                    return client.toString();
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return null;
+    }
+
+    public Client getClientWithID(int id) {
+
+        try {
+            for (Client client : clientDatabase.getClients()) {
+                if (client.getId() == id) {
+                    return client;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
         return null;
     }
@@ -47,32 +74,46 @@ public class ClientService {
     }
 
     public Operation deposit(int id, double amount) {
-        for (Client client : clientDatabase.getClients()) {
-            if (client.getId() == id) {
-                client.deposit(amount);
 
-                return new Operation(amount, true);
+        try {
+            for (Client client : clientDatabase.getClients()) {
+                if (client.getId() == id) {
+                    client.deposit(amount);
 
+                    return new Operation(amount, true);
+
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
+
         System.out.println("Client doesn't have account in this bank.");
         return new Operation(amount, false);
     }
 
     public Operation withdraw(int id, double amount) {
-        for (Client client : clientDatabase.getClients()) {
-            if (client.getId() == id) {
 
-                if (client.getBalance() < amount) {
-                    System.out.println("Client doesn't have enough balance");
-                    return new Operation(amount, false);
+        try {
+            for (Client client : clientDatabase.getClients()) {
+                if (client.getId() == id) {
+
+                    if (client.getBalance() < amount) {
+                        System.out.println("Client doesn't have enough balance");
+                        return new Operation(amount, false);
+                    }
+
+                    client.withdraw(amount);
+
+                    return new Operation(amount, true);
                 }
-
-                client.withdraw(amount);
-
-                return new Operation(amount, true);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
+
         System.out.println("Client doesn't have account in this bank.");
         return new Operation(amount, false);
     }
