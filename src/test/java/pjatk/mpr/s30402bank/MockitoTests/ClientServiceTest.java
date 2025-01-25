@@ -41,8 +41,10 @@ public class ClientServiceTest {
     @Test
     void shouldReceiveNegativeOperation() {
         // GIVEN
+        int n = 1;
+        int balance = 400;
         // WHEN
-        Operation op = clientService.deposit(1, 400);
+        Operation op = clientService.deposit(n, balance);
         // THEN
         assertThat(op.getStatus()).isFalse();
     }
